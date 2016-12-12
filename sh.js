@@ -1,22 +1,51 @@
+ /**
+   * @method sh
+   * @param {Object} h hackmud script context
+   * @param {Object} a arguments for script
+   *  - t: {Scriptor} hackmud user.loc to hit: #s.user.loc
+   */
 function(h, { t }) {
   //t: #s.user.loc
+
+  // required upgrades:  char_count_v1 (1100 character max)
+
+  // NOTE: Must remove JSDoc Comments to upload
+
   let
-    //initiaze empty vars for later use
+    /**
+     * @const r
+     * @description container var for response from target
+     */
     r,
 
-    // empty object to store our successful bruteforce args
+    /**
+     * @const b
+     * @description Object storing our successful bruteforce args
+     */
     b = {},
 
-    // store color names so we don't have to type them multiple times
+    /**
+     * @const d
+     * @description Array of potential color names in their order
+     */
     d = ['red', 'orange', 'yellow', 'lime', 'green', 'cyan', 'blue', 'purple'],
 
-    // we'll use this regex to check for errors
+    /**
+     * @const e
+     * @description RegExp for ERROR message
+     */
     e = /ERROR/gm,
 
-    // unlock commands
+    /**
+     * @const p
+     * @description Array containing EZ lock commands
+     */
     p = ['open', 'unlock', 'release'],
 
-    // core lock color mapping
+    /**
+     * @const m
+     * @description Object mapping color options for CORE locks
+     */
     m = {
       [d[0]]: {
         c: d[4],
@@ -32,7 +61,7 @@ function(h, { t }) {
       },
       [d[3]]: {
         c: d[7],
-        t: [d[6], d[1]]
+        t: [d[6], d[0]]
       },
       [d[4]]: {
         c: d[0],
@@ -52,10 +81,16 @@ function(h, { t }) {
       }
     },
 
-    // core lock colors as array
+    /**
+     * @const k
+     * @description generated Array from color object
+     */
     k = Object.keys(m),
 
-    // lock types
+    /**
+     * @const c
+     * @description Object containing lock types and potential solutions
+     */
     c = {
       EZ_21: p,
       EZ_35: p,
@@ -71,13 +106,24 @@ function(h, { t }) {
       c003_triad_2() { return (b.c003) ? m[b.c003].t : [] }
     },
 
-    // attempt to bruteforce
+    /**
+     * @method f
+     * @description call our target with parameters
+     * @param {Object} z parameters to send to target.call
+     */
     f = z => t.call(z),
 
-    // shorthand object.assign that includes our bruteforced data
+    /**
+     * @method o
+     * @description shorthand Object.assing w/o mutation and using our bruteforce
+     * @param {Object} z parameters to merge with bruteforce
+     */
     o = z => Object.assign({}, z, b),
 
-    // our actual bruteforcing logic
+    /**
+     * @method j
+     * @description go through lock options and bruteforce
+     */
     j = () => {
       // iterate through lock types
       Object.keys(c).forEach(k => {
