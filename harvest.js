@@ -1,4 +1,17 @@
+/**
+ * @method harvest
+ * @description Take most T1 NPC Corp locations and harvest user locs from them
+ * @param {Object} h hackmud script context
+ * @param {Object} a arguments for script
+ *  - t: {Scriptor} hackmud user.loc to hit: #s.user.loc
+ */
 function(h, { t }) { //t: #s.user.loc
+
+  // security_level: 4
+  // chars: 934
+
+  // NOTE: Should remove JSDoc Comments to upload
+
   let
     r, // response
 

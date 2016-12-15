@@ -1,15 +1,22 @@
- /**
-   * @method sh
-   * @param {Object} h hackmud script context
-   * @param {Object} a arguments for script
-   *  - t: {Scriptor} hackmud user.loc to hit: #s.user.loc
-   */
-function(h, { t }) {
-  //t: #s.user.loc
+/**
+ * @method sh
+ * @description take any T1 sequence of hackmud locks and crack them
+ * @param {Object} h hackmud script context
+ * @param {Object} a arguments for script
+ *  - t: {Scriptor} hackmud user.loc to hit: #s.user.loc
+ */
+function(h, { t }) { //t: #s.user.loc
 
-  // required upgrades:  char_count_v1 (1100 character max)
+  // security_level: 4
+  // chars: 1228
 
-  // NOTE: Must remove JSDoc Comments to upload
+  // NOTE: Should remove JSDoc Comments to upload
+
+  // charge 5KGC for each run
+  let go = #s.escrow.charge({ cost: '5KGC', is_unlim: false})
+
+  // is user hasn't authorized script's escrow yet, exit for confirmation
+  if(go) return go
 
   let
     /**
@@ -168,6 +175,9 @@ function(h, { t }) {
     }
   ;
 
+  // kill any clever w4rn_messages
+  f({})
+
   // start cracking
   r = j()
 
@@ -175,6 +185,10 @@ function(h, { t }) {
   while(e.test(r)) {
     r = j()
   }
+
+  // first run is on the house because this requires confirmation the first time it is run
+  // if this is the first time it's been run, call the confirmation message'
+  if(go) #dbreturn go
 
   // return status, bruteforced options, and last response
   return { ok: !!1, b, r }
